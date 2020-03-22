@@ -36,56 +36,38 @@ const MORSE_TABLE = {
     '----.':  '9',
     '-----':  '0',
 };
-
 function decode(expr) {
-    let newstring = '';
-    let result = ''; 
-    let a = expr.split('');
-    for (let i = 1; i < expr.length; i++) {
-        if (a[i] == '0' && a[i - 1] == '1') {
-            newstring += '.';
-            if (i % 10 == 9) {
-                newstring += ',';
-            }
-            i += 1;
-        }
-        else if (a[i] == '1' && a[i - 1] == '1') {
-            newstring += '-';
-            if (i % 10 == 9) {
-                morse_string += ',';
-            }
-            i += 1;
-        }
-        else if (a[i] == '*' && a[i - 1] == '*') {
-            newstring += ' ,';
-            if (i % 10 == 9) {
-                newstring += ',';
-            }
-            i += 9;
-        }
-        else if (a[i] == '*' && a[i - 1] != '*') {
-            newstring += ' ,';
-            if (i % 10 == 9) {
-                newstring += ',';
-            }
-            i += 10;
-        }
-        else if (a[i] == '0' && a[i - 1] == '0') {
-            if (i % 10 == 9) {
-                newstring += ',';
-            }
-            i += 1;
-        }
+let newArr = [];
+for (let i = 0; i < expr.length / 10; i++) {
+let part = expr.slice(i * 10, i * 10 + 10);
+newArr.push(part);
+}
+let morseString = '';
+let decodeString = ''
+for (let i = 0; i < newArr .length; i++) {
+for (let j = 0; j < newArr [i].length / 2; j++) {
+    let codePair = newArr [i].slice(j * 2, j * 2 + 2);
+    switch (codePair) {
+        case '00':
+            break;
+        case '10':
+            morseString += '.';
+            break;
+        case '11':
+            morseString += '-';
+            break;
     }
-    let newwords = newstring.split(',');
-    for (let j = 0; j < morse_words.length - 1; j++) {
-        if (morse_words[j] == ' '){
-            result += ' ';
-            j++;
-        }
-        result +=  MORSE_TABLE[morse_words[j]];
-    }
-    return result;
+
+}
+if (morseString) {
+    decodeString += MORSE_TABLE[morseString];
+} else {
+    decodeString += ' '
+};
+morseString = '';
+}
+
+return decodeString;
 }
 
 module.exports = {
