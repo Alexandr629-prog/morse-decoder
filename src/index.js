@@ -43,7 +43,7 @@ function decode(expr) {
     let a = expr.split('');
     for (let i = 1; i < expr.length; i++) {
         if (a[i] == '0' && a[i - 1] == '1') {
-            morse_string += '.';
+            newstring += '.';
             if (i % 10 == 9) {
                 newstring += ',';
             }
